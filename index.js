@@ -1,4 +1,5 @@
 "use strict";
+const escape = require("escape-html");
 
 require("dotenv").config();
 const express = require("express");
@@ -35,7 +36,7 @@ app.get(
       name: z.string().max(32),
     }),
     query: z.object({
-      theme: z.string().default("moebooru"),
+      theme: z.string().default("gelbooru"),
       padding: z.coerce.number().int().min(0).max(16).default(7),
       offset: z.coerce.number().min(-500).max(500).default(0),
       align: z.enum(["top", "center", "bottom"]).default("top"),
@@ -50,7 +51,13 @@ app.get(
   }),
   async (req, res) => {
     const { name } = req.params;
-    let { theme = "moebooru", num = 0, ...rest } = req.query;
+    let { theme = "gelbooru", num = 0, ...rest } = req.query;
+    // Sanitize user-provided input in `rest`
+    for (const key in rest) {
+      if (Object.prototype.hasOwnProperty.call(rest, key)) {
+        rest[key] = escape(String(rest[key]));
+      }
+    }
 
     // This helps with GitHub's image cache
     res.set({
@@ -65,14 +72,16 @@ app.get(
     }
 
     if (theme === "random") {
-      theme = randomArray(Object.keys(themeList));
+      theme = escape(randomArray(Object.keys(themeList)));
     }
 
     // Send the generated SVG as the result
     const renderSvg = getCountImage({
       count: data.num,
       theme,
-      ...rest,
+      ...Object.fromEntries(
+        Object.entries(rest).map(([key, value]) => [key, escape(String(value))]),
+      ),
     });
 
     res.send(renderSvg);
@@ -82,9 +91,9 @@ app.get(
       { theme, ...req.query },
       `ip: ${req.headers["x-forwarded-for"] || req.connection.remoteAddress}`,
       `ref: ${req.get("Referrer") || null}`,
-      `ua: ${req.get("User-Agent") || null}`
+      `ua: ${req.get("User-Agent") || null}`,
     );
-  }
+  },
 );
 
 // JSON record
