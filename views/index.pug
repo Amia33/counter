@@ -58,7 +58,7 @@ html
     details#themes
       summary#more_theme(onclick="_evt_push(\"click\", \"normal\", \"more_theme\")")
         h3 More theme✨
-      p Just use the query parameters <code>theme</code>, like this: <code>#{ site }/@:name?theme=moebooru</code>
+      p Just use the query parameters <code>theme</code>, like this: <code>#{ site }/@:name?theme=gelbooru</code>
       each theme in Object.keys(themeList)
         .item(data-theme=theme)
           h5 #{ theme }
@@ -93,7 +93,7 @@ html
             td: code theme
             td Select a counter image theme, default is
               |
-              code moebooru
+              code gelbooru
             td
               select#theme
                 option(selected, value="random") * random
