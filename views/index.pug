@@ -1,0 +1,211 @@
+html
+  head
+    title= "Moe Counter!"
+    meta(
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+      name="viewport"
+    )
+    link(href=`${site}/favicon.png`, rel="icon", type="image/png")
+    link(href="https://cdn.jsdelivr.net/npm/normalize.css", rel="stylesheet")
+    link(href="https://cdn.jsdelivr.net/npm/bamboo.css", rel="stylesheet")
+    link(href=`${site}/style.less`, rel="stylesheet/less")
+    script(less, src="https://cdn.jsdelivr.net/npm/less")
+    if ga_id
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      script(async, src=`https://www.googletagmanager.com/gtag/js?id=${ga_id}`)
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "#{ga_id}");
+
+      function _evt_push(type, category, label) {
+        gtag("event", type, {
+          event_category: category,
+          event_label: label,
+        });
+      }
+
+    script.
+      var __global_data = { site: "#{site}" };
+
+  body
+    h1#main_title
+      i Moe Counter!
+
+    h3 How to use
+    p Set a unique id for your counter, replace
+      |
+      code :name
+      |
+      | in the url, That's it!
+
+    h5 SVG address
+    code #{ site }/@:name
+
+    h5 Img tag
+    code &lt;img src="#{ site }/@:name" alt=":name" />
+
+    h5 Markdown
+    code ![:name](#{ site }/@:name)
+
+    h5 e.g.
+      img(alt="Moe Counter!", src=`${site}/@index`)
+
+    details#themes
+      summary#more_theme(onclick="_evt_push(\"click\", \"normal\", \"more_theme\")")
+        h3 More theme✨
+      p Just use the query parameters <code>theme</code>, like this: <code>#{ site }/@:name?theme=moebooru</code>
+      each theme in Object.keys(themeList)
+        .item(data-theme=theme)
+          h5 #{ theme }
+          img(alt=theme, data-src=`${site}/@demo?theme=${theme}`)
+
+    h3 Credits
+    ul
+      li: a(href="https://render.com/", rel="nofollow", target="_blank") Render
+      li: a(href="https://space.bilibili.com/703007996", target="_blank", title="A-SOUL_Official") A-SOUL
+      li: a(href="https://github.com/moebooru/moebooru", rel="nofollow", target="_blank") moebooru
+      li
+        a(href="javascript:alert(\"!!! NSFW LINK !!!\\nPlease enter the url manually\")") gelbooru.com
+        |
+        | NSFW
+      li: a(href="https://icons8.com/icon/80355/star", rel="nofollow", target="_blank") Icons8
+      span: i And all booru site...
+
+    h3 Tool
+    .tool
+      table
+        thead
+          tr
+            th Param
+            th Description
+            th Value
+        tbody
+          tr
+            td: code name
+            td Unique counter name
+            td: input#name(placeholder=":name", type="text")
+          tr
+            td: code theme
+            td Select a counter image theme, default is
+              |
+              code moebooru
+            td
+              select#theme
+                option(selected, value="random") * random
+                each theme in Object.keys(themeList)
+                  option(value=theme) #{ theme }
+          tr
+            td: code padding
+            td Set the minimum length, between 1-16, default is
+              |
+              code 7
+            td: input#padding(
+              max="32",
+              min="1",
+              oninput="this.value = this.value.replace(/[^0-9]/g, \"\")",
+              step="1",
+              type="number",
+              value="7"
+            )
+          tr
+            td: code offset
+            td Set the offset pixel value, between -500-500, default is
+              |
+              code 0
+            td: input#offset(
+              max="500",
+              min="-500",
+              oninput="this.value = this.value.replace(/[^0-9|\-]/g, \"\")",
+              step="1",
+              type="number",
+              value="0"
+            )
+          tr
+            td: code scale
+            td Set the image scale, between 0.1-2, default is
+              |
+              code 1
+            td: input#scale(
+              max="2",
+              min="0.1",
+              oninput="this.value = this.value.replace(/[^0-9|\.]/g, \"\")",
+              step="0.1",
+              type="number",
+              value="1"
+            )
+          tr
+            td: code align
+            td Set the image align, Enum top/center/bottom, default is
+              |
+              code top
+            td: select#align(name="align")
+              option(selected, value="top") top
+              option(value="center") center
+              option(value="bottom") bottom
+          tr
+            td: code pixelated
+            td Enable pixelated mode, Enum 0/1, default is
+              |
+              code 1
+            td
+              input#pixelated(checked, role="switch", type="checkbox")
+              label(for="pixelated"): span
+          tr
+            td: code darkmode
+            td Enable dark mode, Enum 0/1/auto, default is
+              |
+              code auto
+            td: select#darkmode(name="darkmode")
+              option(selected, value="auto") auto
+              option(value="1") yes
+              option(value="0") no
+          tr
+            td(colspan=3)
+              h4.caption Unusual Options
+          tr
+            td: code num
+            td Set counter display number, 0 for disable, default is
+              |
+              code 0
+            td: input#num(
+              max="1e15",
+              min="0",
+              oninput="this.value = this.value.replace(/[^0-9]/g, \"\")",
+              step="1",
+              type="number",
+              value="0"
+            )
+          tr
+            td: code prefix
+            td Set the prefix number, empty for disable
+            td: input#prefix(
+              max="999999",
+              min="0",
+              oninput="this.value = this.value.replace(/[^0-9]/g, \"\")",
+              step="1",
+              type="number",
+              value=""
+            )
+
+      button#get(onclick="_evt_push(\"click\", \"normal\", \"get_counter\")") Generate
+
+      div
+        code#code
+        img#result
+
+    p.github
+      a(
+        href="https://github.com/journey-ad/Moe-Counter",
+        onclick="_evt_push(\"click\", \"normal\", \"go_github\")",
+        target="_blank"
+      ) source code
+
+    .back-to-top
+
+    script(async, src="https://cdn.jsdelivr.net/npm/party-js@2/bundle/party.min.js")
+    script(async, src=`${site}/script.js`)
