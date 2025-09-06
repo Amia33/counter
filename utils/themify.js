@@ -44,7 +44,7 @@ function convertToDatauri(path) {
 function getCountImage(params) {
   let {
     count,
-    theme = "moebooru",
+    theme = "gelbooru",
     padding = 7,
     prefix = -1,
     offset = 0,
@@ -54,7 +54,7 @@ function getCountImage(params) {
     darkmode = "auto",
   } = params;
 
-  if (!(theme in themeList)) theme = "moebooru";
+  if (!(theme in themeList)) theme = "gelbooru";
   padding = parseInt(Number(padding), 10);
   offset = parseFloat(Number(offset), 10);
   scale = parseFloat(Number(scale), 10);
