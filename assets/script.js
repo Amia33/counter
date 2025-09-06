@@ -30,15 +30,14 @@
         party.sparkles(document.documentElement, {
           count: party.variation.range(40, 100),
         }),
-      1000
-    )
+      1000,
+    ),
   );
   moreTheme.addEventListener("click", scrollToThemes);
 
   function handleButtonClick() {
-    const { name, theme, padding, offset, scale, pixelated, darkmode, num } =
-      elements;
-    const nameValue = name.value.trim();
+    const { name, theme, padding, offset, scale, pixelated, darkmode, num } = elements;
+    const nameValue = encodeURIComponent(name.value.trim());
 
     if (!nameValue) {
       alert("Please input counter name.");
@@ -47,13 +46,13 @@
 
     const params = {
       name: nameValue,
-      theme: theme.value || "moebooru",
-      padding: padding.value || "7",
-      offset: offset.value || "0",
-      align: align.value || "top",
-      scale: scale.value || "1",
+      theme: encodeURIComponent(theme.value || "gelbooru"),
+      padding: encodeURIComponent(padding.value || "7"),
+      offset: encodeURIComponent(offset.value || "0"),
+      align: encodeURIComponent(align.value || "top"),
+      scale: encodeURIComponent(scale.value || "1"),
       pixelated: pixelated.checked ? "1" : "0",
-      darkmode: darkmode.value || "auto",
+      darkmode: encodeURIComponent(darkmode.value || "auto"),
     };
 
     if (num.value > 0) {
@@ -161,7 +160,7 @@
           }
         });
       },
-      { rootMargin, threshold }
+      { rootMargin, threshold },
     );
 
     images.forEach((img) => {
@@ -182,9 +181,7 @@
   };
 
   document.readyState === "loading"
-    ? document.addEventListener("DOMContentLoaded", () =>
-        lazyLoad(lazyLoadOptions)
-      )
+    ? document.addEventListener("DOMContentLoaded", () => lazyLoad(lazyLoadOptions))
     : lazyLoad(lazyLoadOptions);
 })();
 
