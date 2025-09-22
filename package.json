@@ -23,7 +23,7 @@
     "mime-types": "^3.0.1",
     "mongoose": "^8.18.1",
     "pug": "^3.0.3",
-    "zod": "^4.1.9"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^3.4.2",
