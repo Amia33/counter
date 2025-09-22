@@ -7,7 +7,7 @@ const schema = new mongoose.Schema(
     name: { type: String, required: true },
     num: { type: Number, required: true },
   },
-  { collection: "tb_count", versionKey: false }
+  { collection: "tb_count", versionKey: false },
 );
 
 // the default mongodb url (local server)
@@ -25,11 +25,7 @@ function getAll() {
 }
 
 function setNum(name, num) {
-  return Count.findOneAndUpdate(
-    { name },
-    { name, num },
-    { upsert: true }
-  ).exec();
+  return Count.findOneAndUpdate({ name }, { name, num }, { upsert: true }).exec();
 }
 
 function setNumMulti(counters) {

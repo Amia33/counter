@@ -38,10 +38,7 @@ module.exports = {
 
     return handler;
   },
-  cors: ({
-    allowOrigins = "*",
-    allowMethods = "GET, POST, PUT, DELETE",
-  } = {}) => {
+  cors: ({ allowOrigins = "*", allowMethods = "GET, POST, PUT, DELETE" } = {}) => {
     const isOriginAllowed = (origin) => {
       if (Array.isArray(allowOrigins)) {
         return allowOrigins.includes(origin);

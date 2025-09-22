@@ -17,9 +17,7 @@ db.exec(`CREATE TABLE IF NOT EXISTS tb_count (
 
 function getNum(name) {
   return new Promise((resolve, reject) => {
-    const stmt = db.prepare(
-      "SELECT `name`, `num` from tb_count WHERE `name` = ?"
-    );
+    const stmt = db.prepare("SELECT `name`, `num` from tb_count WHERE `name` = ?");
     const row = stmt.get(name);
     resolve(row || { name, num: 0 });
   });
@@ -40,7 +38,7 @@ function setNum(name, num) {
             VALUES($name, $num)
             ON CONFLICT(name) DO
             UPDATE SET \`num\` = $num;`,
-      { $name: name, $num: num }
+      { $name: name, $num: num },
     );
 
     resolve();

@@ -1,7 +1,5 @@
 {
-  "plugins": [
-    "@prettier/plugin-pug"
-  ],
+  "plugins": ["@prettier/plugin-pug"],
   "printWidth": 100,
   "pugPrintWidth": 100,
   "pugSingleQuote": false,
