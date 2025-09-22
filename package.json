@@ -14,16 +14,16 @@
   "license": "Apache-2.0 license",
   "packageManager": "pnpm@10.15.1",
   "dependencies": {
-    "better-sqlite3": "^12.2.0",
+    "better-sqlite3": "^12.3.0",
     "compression": "^1.8.1",
     "dotenv": "^17.2.2",
     "escape-html": "^1.0.3",
     "express": "^5.1.0",
     "image-size": "1.2.1",
     "mime-types": "^3.0.1",
-    "mongoose": "^8.18.1",
+    "mongoose": "^8.18.2",
     "pug": "^3.0.3",
-    "zod": "^4.1.9"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^3.4.2",
